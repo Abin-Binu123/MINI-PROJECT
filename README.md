@@ -185,12 +185,6 @@ python app.py
 3️⃣ Open in Browser
 http://127.0.0.1:5000/
 
-🧬 Brand Comparison Preview
-
-Replace with your chart screenshot later:
-
-![Comparison Chart](images/brand_comparison.png)
-
 🔮 Future Enhancements
 
 Add ML model to predict used car price
