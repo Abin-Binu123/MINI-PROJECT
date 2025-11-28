@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Dashboard</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+    <style>
+        body { background: #f3f3f3; }
+        .container-box {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            margin-top: 40px;
+        }
+        h2 { font-weight: 600; }
+    </style>
+
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <h2 class="text-center mb-4">{{ selected_brand }} Car Interactive Dashboard</h2>
+
+    <!-- Filter Form -->
+    <form method="get" class="container-box mb-4">
+        <div class="row g-3">
+
+            <!-- BRAND DROPDOWN -->
+            <div class="col-md-3">
+                <select class="form-control" name="brand">
+                    {% for brand in brand_list %}
+                        <option value="{{ brand }}"
+                            {% if brand == selected_brand %}selected{% endif %}>
+                            {{ brand }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- SEARCH -->
+            <div class="col-md-3">
+                <input class="form-control" type="text" name="search" placeholder="Search car name...">
+            </div>
+
+            <!-- FUEL -->
+            <div class="col-md-2">
+                <select class="form-control" name="fuel">
+                    <option value="">Fuel Type</option>
+                    {% for f in fuel_list %}
+                        <option value="{{f}}">{{f}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- TRANSMISSION -->
+            <div class="col-md-2">
+                <select class="form-control" name="trans">
+                    <option value="">Transmission</option>
+                    {% for t in trans_list %}
+                        <option value="{{t}}">{{t}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- OWNERS -->
+            <div class="col-md-2">
+                <select class="form-control" name="owners">
+                    <option value="">Owners</option>
+                    {% for o in owner_list %}
+                        <option value="{{o}}">{{o}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- SORT -->
+            <div class="col-md-3">
+                <select class="form-control" name="sort">
+                    <option value="">Sort By</option>
+                    <option value="price_asc">Price: Low → High</option>
+                    <option value="price_desc">Price: High → Low</option>
+                    <option value="km_asc">KM: Low → High</option>
+                    <option value="km_desc">KM: High → Low</option>
+                    <option value="year_asc">Oldest First</option>
+                    <option value="year_desc">Newest First</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button class="btn btn-primary w-100 mt-3">Apply Filters</button>
+    </form>
+
+    <!-- TABLE -->
+    <div class="container-box">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Kilometers</th>
+                    <th>Year</th>
+                    <th>Fuel</th>
+                    <th>Transmission</th>
+                    <th>Price</th>
+                    <th>Owners</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for row in tables %}
+                <tr>
+                    <td>{{ row.Name }}</td>
+                    <td>{{ row['Kilometers Driven'] }}</td>
+                    <td>{{ row['Year of Manufacture'] }}</td>
+                    <td>{{ row['Fuel Type'] }}</td>
+                    <td>{{ row.Transmission }}</td>
+                    <td>{{ row.Price }}</td>
+                    <td>{{ row['Number of owners'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- CHARTS -->
+    <div class="chart-container container-box">
+        <h3 class="text-center">Cars by Year</h3>
+        <div id="year_chart"></div>
+    </div>
+
+    <div class="chart-container container-box">
+        <h3 class="text-center">Fuel Type Distribution</h3>
+        <div id="fuel_chart"></div>
+    </div>
+
+    <div class="chart-container container-box mb-5">
+        <h3 class="text-center">Price vs Kilometers</h3>
+        <div id="scatter_chart"></div>
+    </div>
+
+    <!-- BRAND COMPARISON CHARTS -->
+<div class="chart-container container-box">
+    <h3 class="text-center">Average Price Comparison (Mahindra vs Toyota vs Kia)</h3>
+    <div id="price_compare"></div>
+</div>
+
+<div class="chart-container container-box">
+    <h3 class="text-center">Number of Cars Comparison</h3>
+    <div id="count_compare"></div>
+</div>
+
+<div class="chart-container container-box">
+    <h3 class="text-center">Fuel Type Mix Comparison</h3>
+    <div id="fuel_compare"></div>
+</div>
+
+</div>
+
+<script>
+    const yearLabels = {{ year_labels | tojson }};
+    const yearValues = {{ year_values | tojson }};
+    const fuelLabels = {{ fuel_labels | tojson }};
+    const fuelValues = {{ fuel_values | tojson }};
+    const scatter = {{ scatter_data | tojson }};
+
+    Plotly.newPlot("year_chart", [{
+        x: yearLabels,
+        y: yearValues,
+        type: 'bar',
+        marker: {color: '#007bff'}
+    }]);
+
+    Plotly.newPlot("fuel_chart", [{
+        labels: fuelLabels,
+        values: fuelValues,
+        type: 'pie'
+    }]);
+
+    Plotly.newPlot("scatter_chart", [{
+        x: scatter.km,
+        y: scatter.price,
+        mode: 'markers',
+        type: 'scatter',
+        marker: {size: 10, color: '#28a745'}
+    }]);
+
+    // BRAND COMPARISON DATA
+    const compare_avg_price = {{ compare_avg_price | tojson }};
+    const compare_car_count = {{ compare_car_count | tojson }};
+    const compare_fuel = {{ compare_fuel | tojson }};
+
+    // AVERAGE PRICE COMPARISON
+    Plotly.newPlot("price_compare", [{
+        x: compare_avg_price.brands,
+        y: compare_avg_price.avg_price,
+        type: 'bar',
+        marker: { color: ['#ff5733', '#4287f5', '#28a745'] }
+    }]);
+
+    // CAR COUNT COMPARISON
+    Plotly.newPlot("count_compare", [{
+        x: compare_car_count.brands,
+        y: compare_car_count.counts,
+        type: 'bar',
+        marker: { color: ['#ffbd33', '#3380ff', '#33ff57'] }
+    }]);
+
+    // FUEL TYPE STACKED BAR
+    Plotly.newPlot("fuel_compare", compare_fuel, {
+        barmode: 'stack'
+    });
+</script>
+
+</body>
+</html>
