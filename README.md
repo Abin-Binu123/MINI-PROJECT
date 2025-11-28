@@ -1,24 +1,29 @@
-This project is part of the EVOASTRA Internship MINI PROJECT, focused on web scraping, data cleaning, dashboard creation, and analysis of used cars listed on AckoDrive.com.
+📌 Project Overview
 
-Due to AckoDrive’s dynamic rendering and anti-scraping protections, we used a combination of:
+This MINI PROJECT focuses on web scraping and data analysis using AckoDrive's used-car listings.
 
-Scraping attempts (Requests/Selenium)
+Since AckoDrive uses JavaScript-rendered pages + anti-bot protections, direct scraping was difficult.
+Therefore, this project includes:
 
-Prepared datasets (Mahindra, Toyota, Kia)
+✔ Web scraping attempts (Requests, Selenium, JS analysis)
+✔ Prepared datasets for:
 
-Exploratory API/HTML analysis
+Mahindra
 
-Data visualization & brand comparison dashboard
+Toyota
 
-The final deliverables include:
+Kia
 
-A full Flask dashboard
+✔ A complete Flask interactive dashboard
+✔ A detailed Jupyter Notebook with:
 
-A complete Jupyter Notebook
+Scraping investigation
 
-A set of clean, structured CSV datasets
+Data cleaning
 
-A graphical brand comparison system
+Visualization
+
+Brand comparison
 
 📁 Project Structure
 MINI PROJECT/
@@ -33,16 +38,16 @@ MINI PROJECT/
 │   ├── Advanced_Web_Scraping_MiniProject.ipynb
 │
 ├── src/
-│   ├── app.py                # Flask dashboard backend
-│   ├── generate_datasets.py  # Script for Toyata & Kia dataset generation
+│   ├── app.py                # Flask Dashboard Backend
+│   ├── generate_datasets.py  # Script for Toyota/Kia dataset creation
 │   ├── templates/
-│   │   └── index.html         # Dashboard UI
+│   │   └── index.html        # Dashboard UI
 │
 └── README.md
 
-🎯 Project Objectives
-✔ Scrape car details for Mumbai from AckoDrive
-✔ Collect key fields:
+🚗 Car Details Extracted
+
+Each dataset includes:
 
 Kilometers Driven
 
@@ -58,81 +63,32 @@ Location
 
 Number of Owners
 
-Brand
+Car Brand
 
-✔ Build complete datasets for:
+Car Model
 
-Mahindra
+🎨 Dashboard UI Preview
 
-Toyota
+💡 Insert your screenshot here after running the project:
 
-Kia
-
-✔ Create a fully interactive dashboard that includes:
-
-Filters (fuel, owners, transmission)
-
-Sorting options
-
-Search feature
-
-Interactive charts:
-
-Cars by Year
-
-Fuel Type Distribution
-
-Price vs KM Scatter Plot
-
-Brand Comparison Charts
-
-🛠 Technologies Used
-Backend:
-
-Python
-
-Flask
-
-Frontend:
-
-HTML
-
-Bootstrap
-
-Plotly.js
-
-Data Analysis:
-
-Pandas
-
-Matplotlib
-
-Seaborn
-
-Plotly
-
-Notebook Environment:
-
-Jupyter Notebook
-
-VS Code
+![Dashboard Screenshot](images/dashboard_screenshot.png)
 
 📊 Dashboard Features
-🔍 Filters
+🔍 Filter Options
 
 Fuel Type
 
 Transmission
 
-Owners
+Number of Owners
 
 Sort (Price, KM, Year)
 
-Search by Car Name
+Free-text search
 
-Brand Dropdown (Mahindra, Toyota, Kia)
+Brand selector (Mahindra, Toyota, Kia)
 
-📈 Graphs
+📈 Visual Charts (Plotly Interactive)
 
 Cars by Year
 
@@ -142,76 +98,119 @@ Price vs KM Scatter
 
 Brand Comparison Charts:
 
-Average Price by Brand
+Average Price
 
-Car Count by Brand
+Number of Cars
 
-Stacked Fuel Type Chart
+Fuel Mix (stacked bar)
 
-📘 Jupyter Notebook Deliverables
+🧪 Jupyter Notebook Deliverables
+
 The notebook includes:
 
-Scraping attempts
+📘 Scraping Investigation
 
-Analysis of AckoDrive DOM & JS rendering
+HTML analysis
 
-Prepared dataset loading
+JSON script extraction tests
 
-Cleaning pipeline
+Selenium automation trial
 
-Per-brand visualizations
+Why scraping fails (Cloudflare/JS blocking)
 
-Brand comparison graphs
+🧹 Data Cleaning
 
-Export of combined cleaned dataset
+Removing inconsistencies
 
-Notebook files:
+Standardizing columns
 
-Web_Scraping_MiniProject.ipynb
+Handling null values
 
-Advanced_Web_Scraping_MiniProject.ipynb
+Converting data types
 
-🧪 How to Run the Flask App
-1️⃣ Install dependencies:
+📊 Analysis
+
+Per-brand insights
+
+Visual charts
+
+Comparison metrics
+
+📁 Outputs
+
+Cleaned CSVs
+
+Combined dataset
+
+Brand-level summary table
+
+🛠 Tech Stack
+🔹 Language
+
+Python 3.x
+
+🔹 Backend
+
+Flask
+
+🔹 Data Processing
+
+Pandas
+
+NumPy
+
+🔹 Visualization
+
+Plotly
+
+Matplotlib
+
+Seaborn
+
+🔹 Tools
+
+Jupyter Notebook
+
+VS Code
+
+Git & GitHub
+
+🚀 How to Run the Dashboard
+1️⃣ Install Dependencies
 pip install flask pandas plotly
 
-2️⃣ Navigate to project folder:
+2️⃣ Start the App
 cd src
-
-3️⃣ Run the app:
 python app.py
 
-4️⃣ Visit dashboard:
+3️⃣ Open in Browser
 http://127.0.0.1:5000/
 
-📥 Datasets Used
+🧬 Brand Comparison Preview
 
-All datasets are located in the data/ folder.
+Replace with your chart screenshot later:
 
-Mahindra (scraped/prepared)
+![Comparison Chart](images/brand_comparison.png)
 
-Toyota (prepared)
+🔮 Future Enhancements
 
-Kia (prepared)
+Add ML model to predict used car price
 
-All follow the same structure to allow multi-brand comparison.
+Add live scraping with Playwright stealth mode
 
-🚀 Future Enhancements
+Deploy the dashboard to Render / Vercel
 
-Machine Learning model: Predict used car prices
+Add user authentication for Premium features
 
-Automatic live scraping using undetected browser
-
-Deployment to Render / Vercel
-
-Admin panel for uploading new datasets
-
-👨‍💻 Author / Contributors
-
+👨‍💻 Author
 Abin Binu
+
 B.Tech AIML
+
 EVOASTRA Internship Program
 
-📝 License
+GitHub: your-github-username
 
-This project is for educational and internship assessment purposes.
+📄 License
+
+This project is intended for academic and internship evaluation use only.
