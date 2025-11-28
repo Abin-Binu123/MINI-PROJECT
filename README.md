@@ -69,9 +69,8 @@ Car Model
 
 🎨 Dashboard UI Preview
 
-💡 Insert your screenshot here after running the project:
-
 ![Dashboard Screenshot](images/dashboard_screenshot.png)
+
 
 📊 Dashboard Features
 🔍 Filter Options
